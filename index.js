@@ -26,8 +26,31 @@ import { deck, users } from './setup.js';
 //   }
 // }
 
-function drawCards(deck, num){
-  return [deck, num];
+function drawCards(deck, num) {
+  const hand = [];
+  for (let i = 0; i < num; i++) {
+    const randomIndex = Math.floor(Math.random() * deck.length);
+    hand.push(deck[randomIndex]);
+    deck.splice(randomIndex, 1);
+  }
+
+  // Calculate remaining suits and values
+  const remainingSuits = {};
+  const remainingValues = {};
+
+  deck.forEach(card => {
+    if (remainingSuits[card.suit]) {
+      remainingSuits[card.suit]++;
+    } else {
+      remainingSuits[card.suit] = 1;
+    }
+    if (remainingValues[card.value]) {
+      remainingValues[card.value]++;
+    } else {
+      remainingValues[card.value] = 1;
+    }
+  });
+  return { hand, remainingSuits, remainingValues };
 }
 
 console.log(drawCards(deck, 5));
@@ -35,7 +58,7 @@ console.log(drawCards(deck, 5));
 
 // Given an array of users
 // Write a function that will remove any duplicates from the users array and show the number of total duplicates
-// The duplicated user should be reduced to one insntace in the array
+// The duplicated user should be reduced to one instance in the array
 // i.e.
 // userIn = [
 //   {
@@ -58,7 +81,7 @@ console.log(drawCards(deck, 5));
 //   dupeCount: 1
 // }
 
-function deduplicateUsers(users){
+function deduplicateUsers(users) {
   return users;
 }
 
