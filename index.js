@@ -122,3 +122,34 @@ console.log(deduplicateUsers(users));
 //Given that you can control the object schema
 //And given that all user editable fields are limited to numbers and letters
 //NOTE: This question does not have a correct answer, it is a design question to see how you think about the problem
+
+// Because the database only allows searching by a single field, I would design the event record object to include a dedicated "searchIndex" field. This field would be a concatenated string of all the searchable fields in the event object.
+
+// For example,
+// Event Data the user can see:
+// {
+//   eventName: "Annual Meeting",
+//   eventDate: "2023-10-15",
+//   eventLocation: "Conference Room A"
+// }
+//
+// Event Data the system stores:
+// {
+//   eventName: "Annual Meeting",
+//   eventDate: "2023-10-15",
+//   eventLocation: "Conference Room A",
+//   searchIndex: "annual meeting 20231015 conference room a"
+// }
+
+// The "searchIndex" field would be created by concatenating the values of all fields that need to be searchable, converting them to lowercase, and normalizing values by lowercasing and removing non-alphanumeric characters. This way, when a user searches for an event, the system can simply query the "searchIndex" field with the search term, allowing for multi-field search capabilities within the constraints of the database.
+
+// The searchIndex is designed to be a hidden field that users cannot edit directly, ensuring data integrity while still providing the necessary search functionality.
+
+// Some constraints to this approach include:
+// 1. The length of the searchIndex field must be within the database's limits.
+// 2. The system must ensure that the searchIndex is updated whenever any of the searchable fields are modified.
+// 3. This approach may lead to larger storage requirements due to the additional searchIndex field.
+// 4. Search precision may be affected by the concatenation method, so careful consideration of how fields are combined is necessary to avoid false positives or negatives in search results.
+
+
+// End of non-coding challenge.
