@@ -82,7 +82,20 @@ console.log(drawCards(deck, 5));
 // }
 
 function deduplicateUsers(users) {
-  return users;
+  const uniqueUsers = [];
+  let dupeCount = 0;
+  const userSet = new Set();
+
+  users.forEach(user => {
+    const userString = JSON.stringify(user);
+    if (!userSet.has(userString)) {
+      userSet.add(userString);
+      uniqueUsers.push(user);
+    } else {
+      dupeCount++;
+    }
+  })
+  return { returnUsers: uniqueUsers, dupeCount };
 }
 
 console.log(deduplicateUsers(users));
